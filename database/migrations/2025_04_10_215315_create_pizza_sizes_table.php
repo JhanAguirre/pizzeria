@@ -8,16 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('extra_ingredients', function (Blueprint $table) {
+        Schema::create('pizza_sizes', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
+            $table->unsignedBigInteger('pizza_id');
+            $table->enum('size', ['pequeña', 'mediana', 'grande']);
             $table->decimal('price', 8, 2);
             $table->timestamps();
+
+            $table->foreign('pizza_id')->references('id')->on('pizzas')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('extra_ingredients');
+        Schema::dropIfExists('pizza_sizes');
     }
 };
